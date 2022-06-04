@@ -38,7 +38,7 @@ func main() {
 	forever := make(chan bool)
 	go func() {
 		for d := range msgs {
-			helper.PhotoResize(d.Body, d.MessageId)
+			helper.Resize(d.Body, d.MessageId)
 		}
 	}()
 	log.Println("Successfully Connected to our RabbitMQ Instance")

@@ -43,8 +43,6 @@ func GetPhoto(w http.ResponseWriter, r *http.Request) {
 	if !ok {
 		fmt.Println("fileName is missing in parameters")
 	}
-	//file, err := os.OpenFile("resources/"+fileName, os.O_RDONLY, 0666)
-
 	fileBytes, err := ioutil.ReadFile("resources/" + fileName)
 	if err != nil {
 		panic(err)
@@ -53,29 +51,4 @@ func GetPhoto(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/octet-stream")
 	w.Write(fileBytes)
 	return
-
-	//request := make(map[string]string)
-	//reqBody, _ := ioutil.ReadAll(r.Body)
-	//err := json.Unmarshal(reqBody, &request)
-	//if err != nil {
-	//	log.Printf("can't unmarshal'")
-	//}
-	//file, err := os.OpenFile("resources/"+request["filename"], os.O_RDONLY, 0666)
-	//
-	//w.WriteHeader(http.StatusOK)
-	//w.Header().Set("Content-Type", "application/octet-stream")
-	//w.Write(file)
-	//return
-	//
-	//reqImg, err := client.Get("http://www.google.com/intl/en_com/images/srpr/logo3w.png")
-	//if err != nil {
-	//	fmt.Fprintf(res, "Error %d", err)
-	//	return
-	//}
-	//res.Header().Set("Content-Length", fmt.Sprint(reqImg.ContentLength))
-	//res.Header().Set("Content-Type", reqImg.Header.Get("Content-Type"))
-	//if _, err = io.Copy(res, reqImg.Body); err != nil {
-	//	// handle error
-	//}
-	//reqImg.Body.Close()
 }
