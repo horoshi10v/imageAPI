@@ -9,8 +9,6 @@ import (
 func Setup() {
 	r := mux.NewRouter()
 	r.HandleFunc("/upload", handler.UploadPhoto)
-	//r.HandleFunc("/{fileName}", handler.GetPhoto)
-	r.HandleFunc("/{fileName}", handler.GetQualityPhoto)
+	r.HandleFunc("/{fileName}", handler.PostPhoto)
 	http.ListenAndServe(":8080", r)
-
 }
