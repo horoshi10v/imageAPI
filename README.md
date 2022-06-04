@@ -4,7 +4,7 @@ HTTP API for uploading, optimizing, and serving images.
 
 ## Prerequisites
 
-- [libvips](https://github.com/libvips/libvips) 8.3+ (8.8+ recommended)
+- [libvips](https://www.libvips.org/install.html) 8.3+ (8.8+ recommended)
 - C compatible compiler such as gcc 4.6+ or clang 3.0+
 - Go 1.7+
 - Docker
