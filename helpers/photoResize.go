@@ -16,7 +16,12 @@ const (
 
 func Resize(fileBytes []byte, fileName string) {
 	var quality = [4]float64{q100, q75, q50, q25}
+	var idQuality = make([]int, len(quality))
+	for j := range idQuality {
+		idQuality[j] = int(quality[j] * 100)
+	}
 	sizeImage, _ := bimg.NewImage(fileBytes).Size()
+
 	for i, item := range quality {
 		newWidth := item * float64(sizeImage.Width)
 		newHeight := item * float64(sizeImage.Height)
@@ -24,7 +29,7 @@ func Resize(fileBytes []byte, fileName string) {
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
 		}
-		bimg.Write("resources/"+fileName+"q="+strconv.Itoa(i)+"."+fileName, newImage)
+		bimg.Write("resources/"+"q"+strconv.Itoa(idQuality[i])+"."+fileName, newImage)
 	}
 }
 

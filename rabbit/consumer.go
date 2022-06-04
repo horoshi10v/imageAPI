@@ -4,7 +4,6 @@ import (
 	helper "api/helpers"
 	"fmt"
 	"github.com/streadway/amqp"
-	"log"
 )
 
 // ConsumeMsgRabbit consume messages from RabbitMQ
@@ -34,14 +33,8 @@ func ConsumeMsgRabbit() {
 		false,
 		nil,
 	)
+	for d := range msgs {
+		helper.Resize(d.Body, d.MessageId)
+	}
 
-	forever := make(chan bool)
-	go func() {
-		for d := range msgs {
-			helper.PhotoResize(d.Body, d.MessageId)
-		}
-	}()
-	log.Println("Successfully Connected to our RabbitMQ Instance")
-	log.Println(" [*] - Waiting for messages")
-	<-forever
 }

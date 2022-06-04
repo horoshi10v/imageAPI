@@ -1,15 +1,16 @@
 package routes
 
 import (
-	"api/controllers"
+	"api/handler"
 	"github.com/gorilla/mux"
 	"net/http"
 )
 
 func Setup() {
 	r := mux.NewRouter()
-	r.HandleFunc("/upload", controllers.UploadPhoto)
-	r.HandleFunc("/{fileName}", controllers.GetPhoto)
+	r.HandleFunc("/upload", handler.UploadPhoto)
+	//r.HandleFunc("/{fileName}", handler.GetPhoto)
+	r.HandleFunc("/{fileName}", handler.GetQualityPhoto)
 	http.ListenAndServe(":8080", r)
 
 }

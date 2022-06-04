@@ -1,4 +1,4 @@
-package controllers
+package handler
 
 import (
 	"api/rabbit"
@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 func UploadPhoto(w http.ResponseWriter, r *http.Request) {
@@ -43,7 +44,7 @@ func GetPhoto(w http.ResponseWriter, r *http.Request) {
 	if !ok {
 		fmt.Println("fileName is missing in parameters")
 	}
-	fileBytes, err := ioutil.ReadFile("resources/" + fileName)
+	fileBytes, err := ioutil.ReadFile("resources/" + "q" + strconv.Itoa(0) + "." + fileName)
 	if err != nil {
 		panic(err)
 	}
@@ -51,4 +52,44 @@ func GetPhoto(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/octet-stream")
 	w.Write(fileBytes)
 	return
+}
+
+func GetQualityPhoto(w http.ResponseWriter, r *http.Request) {
+	var fileBytes []byte
+	vars := mux.Vars(r)
+	fileName := vars["fileName"]
+	params := r.URL.Query().Get("quality")
+	if params == "" {
+		fileBytes, _ = ioutil.ReadFile("resources/" + "q100." + fileName)
+	} else {
+		fileBytes, _ = ioutil.ReadFile("resources/" + "q" + params + "." + fileName)
+	}
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "application/octet-stream")
+	w.Write(fileBytes)
+	return
+
+	//param := r.FormValue("quality")
+	//if param == "" {
+	//	fileBytes, _ = ioutil.ReadFile("resources/" + "q0." + fileName)
+	//} else {
+	//	fileBytes, _ = ioutil.ReadFile("resources/" + "q" + param + "." + fileName)
+	//}
+
+	//params := make(map[string]int)
+	//params["100"] = 0
+	//params["75"] = 1
+	//params["50"] = 2
+	//params["25"] = 3
+	//vars := mux.Vars(r)
+	//fileName := vars["fileName"]
+	//quality := vars["quality"]
+	//request, ok := params[quality]
+	//if ok {
+	//	fileBytes, _ := ioutil.ReadFile("resources/" + "q" + strconv.Itoa(request) + "." + fileName)
+	//	w.WriteHeader(http.StatusOK)
+	//	w.Header().Set("Content-Type", "application/octet-stream")
+	//	w.Write(fileBytes)
+	//	return
+	//}
 }
